@@ -167,7 +167,7 @@ input[type="text"]:focus, select:focus, input[type="file"]:focus, textarea:focus
         <li><a href="{{route('institution.logout')}}">log out</a></li>
     </div>
     <div class="con">
-        <div class="btn btn-primary"><a href="{{route('institution.profile', $institution->id)}}">Edit Profile</a></div>
+        <div class="btn btn-primary"><a href="{{route('institution.profile')}}">Edit Profile</a></div>
         <div  class="btn btn-primary"><a href="{{route('view-admissions', $institution->id)}}">View uploaded admissions</a></div>
         <button class="btn btn-primary" onclick="toggleFacultyForm()"><i class="fas fa-plus"></i>Add Faculty</button>
         <button class="btn btn-primary" onclick="toggleCourseForm()"><i class="fas fa-plus"></i>Add Course</button>

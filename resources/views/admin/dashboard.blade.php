@@ -87,7 +87,7 @@
 <body>
     <div class="sidebar">
         <h2>Admin Dashboard</h2>
-        <a href="{{route('admin.profile.show')}}">Profile</a>
+        <a href="{{route('admin.profile.edit')}}">Profile</a>
         <a href="{{ route('admin.dashboard') }}">Home</a>
         <a href="{{ route('institutions.index') }}">Institutions</a>
         <a href="{{route('admin.logout')}}">Log out</a>
