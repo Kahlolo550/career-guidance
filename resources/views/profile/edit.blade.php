@@ -127,7 +127,7 @@
 </head>
 <body>
 
-<a href="javascript:void(0);" class="back-button" onclick="history.back();">Back</a>
+<a href="{{route('dashboard')}}" class="back-button" onclick="history.back();">Back</a>
 
 <div class="container">
     <header>

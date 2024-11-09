@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\Institution\Auth\LoginController;
+use App\Http\Controllers\Institution\Auth\ResetPasswordController;
+use App\Http\Controllers\Institution\Auth\ForgotPasswordController;
 use App\Http\Controllers\Institution\Auth\RegisteredUserController;
 
 Route::prefix('institution')->group(function () {
@@ -11,6 +13,8 @@ Route::prefix('institution')->group(function () {
 
     Route::get('login', [LoginController::class, 'create'])->name('institution.login');
     Route::post('login', [LoginController::class, 'store']);
+
+   
 
 
    
@@ -26,4 +30,9 @@ Route::prefix('institution')->middleware('auth:institution')->group(function () 
 });
 
 Route::get('/institutions/{id}', [InstitutionController::class, 'show']);
+
+
+
+
+
 

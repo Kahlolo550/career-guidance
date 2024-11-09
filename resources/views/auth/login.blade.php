@@ -129,11 +129,10 @@
 
         @media (max-width: 480px) {
             .login-container {
-                padding: 20px; /* Adjust padding for smaller screens */
-            }
+                padding: 20px;  }
 
             .login-container h2 {
-                font-size: 24px; /* Slightly smaller heading */
+                font-size: 24px; 
             }
         }
     </style>
@@ -141,18 +140,18 @@
 <body>
     <div class="login-container">
         <h2>Login</h2>
-        <div class="status-message"> <!-- Placeholder for status messages --> </div>
+        <div class="status-message"> </div>
         <form method="POST" action="{{ route('login') }}">
             @csrf
             <div class="form-group">
                 <label for="email">{{ __('Email') }}</label>
                 <input id="email" type="email" name="email" required autofocus autocomplete="username" />
-                <div class="input-error"> <!-- Placeholder for email error messages --> </div>
+                <div class="input-error">  </div>
             </div>
             <div class="form-group">
                 <label for="password">{{ __('Password') }}</label>
                 <input id="password" type="password" name="password" required autocomplete="current-password" />
-                <div class="input-error"> <!-- Placeholder for password error messages --> </div>
+                <div class="input-error">  </div>
             </div>
             <div class="checkbox-container">
                 <input id="remember_me" type="checkbox" name="remember">

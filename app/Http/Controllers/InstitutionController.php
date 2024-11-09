@@ -142,6 +142,32 @@ public function showApplications($institutionId)
 
 
 
+public function showProfile($id)
+{
+    $institution = Institution::findOrFail($id);
+    return view('institution.profile', compact('institution'));
+}
+
+public function editProfile($id)
+{
+    $institution = Institution::findOrFail($id);
+    return view('institution.edit-profile', compact('institution'));
+}
+
+public function updateProfile(Request $request, $id)
+{
+    $institution = Institution::findOrFail($id);
+    $institution->update([
+        'name' => $request->name,
+        'email' => $request->email,
+        
+    ]);
+    return redirect()->route('institution.profile', $institution->id);
+}
+
+
+
+
 
 
 }

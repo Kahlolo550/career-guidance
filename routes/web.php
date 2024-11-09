@@ -2,6 +2,7 @@
 
 use App\Models\Institution;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\ProfileController;
@@ -15,7 +16,9 @@ use App\Http\Controllers\QualificationController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\InstitutionApplicationsController;
+use App\Http\Controllers\Institution\Auth\ResetPasswordController;
 use App\Http\Controllers\Institution\InstitutionProfileController;
+use App\Http\Controllers\Institution\Auth\ForgotPasswordController;
 
 Route::get('/', function () {
 
@@ -44,9 +47,10 @@ Route::middleware('auth:admin')->group(function () {
 });
 
 Route::middleware('auth:institution')->group(function () {
-    Route::get('institution/profile', [InstitutionProfileController::class, 'edit'])->name('institution.profile.edit');
-    Route::patch('institution/profile', [InstitutionProfileController::class, 'update'])->name('institution.profile.update');
-    Route::delete('institution/profile', [InstitutionProfileController::class, 'destroy'])->name('institution.profile.destroy');
+    Route::get('/institution/{id}/profile', [InstitutionController::class, 'showProfile'])->name('institution.profile');
+Route::get('/institution/{id}/profile/edit', [InstitutionController::class, 'editProfile'])->name('institution.profile.edit');
+Route::put('/institution/{id}/profile', [InstitutionController::class, 'updateProfile'])->name('institution.profile.update');
+
 });
 
 
@@ -71,7 +75,6 @@ Route::get('/institution/{id}/dashboard', [InstitutionController::class, 'showIn
 
 
 
-// In routes/web.php iim not sure
 Route::middleware(['auth:institution'])->group(function () {
     Route::get('/institution/dashboard', [InstitutionController::class, 'dashboard'])->name('institution.dashboard');
     Route::post('/institution/faculty', [FacultyController::class, 'store'])->name('faculties.store');
@@ -82,14 +85,10 @@ Route::middleware(['auth:institution'])->group(function () {
 
 
 });
-
-// Example of a route for publishing admissions
 Route::patch('institution/admissions/{id}/publish', [AdmissionController::class, 'publish'])->name('admissions.publish');
 
-//Route::get('/institutions/{id}/home', [InstitutionController::class, 'show'])->name('institutions.show');
 Route::get('/faculties/{id}', [FacultyController::class, 'show'])->name('faculties.show');
 
-//Route::get('/institutions/{id}/home', [InstitutionController::class, 'home'])->name('institution.home');
 
 
 
@@ -155,23 +154,18 @@ Route::get('/istitutions/{institution}/admissions', [AdmissionsController::class
     Route::post('/applications', [ApplicationController::class, 'store'])
         ->name('applications.store');
     
-    // Route for showing the index of applications (optional)
     Route::get('/applications', [ApplicationController::class, 'index'])
         ->name('applications.index');
     
-    // If you want to show specific application details
     Route::get('/applications/{application}', [ApplicationController::class, 'show'])
         ->name('applications.show');
     
-    // If you want to edit an application (optional)
     Route::get('/applications/{application}/edit', [ApplicationController::class, 'edit'])
         ->name('applications.edit');
     
-    // Route for updating an application (optional)
     Route::put('/applications/{application}', [ApplicationController::class, 'update'])
         ->name('applications.update');
     
-    // Route for deleting an application (optional)
     Route::delete('/applications/{application}', [ApplicationController::class, 'destroy'])
         ->name('applications.destroy');
 
@@ -184,6 +178,15 @@ Route::get('/istitutions/{institution}/admissions', [AdmissionsController::class
    
 
         Route::get('/institutions/{institutionId}/applications', [InstitutionController::class, 'showApplications'])->name('institution.applications');
+        
+
+        Route::middleware(['auth:admin'])->group(function () {
+            Route::get('/admin/profile', [AdminController::class, 'showProfile'])->name('admin.profile.show');
+            Route::get('/admin/profile/edit', [AdminController::class, 'editProfile'])->name('admin.profile.edit');
+            Route::post('/admin/profile/update', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
+        });
+
+
         
 
 require __DIR__.'/auth.php';
