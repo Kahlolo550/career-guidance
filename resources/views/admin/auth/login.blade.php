@@ -140,18 +140,24 @@
                     <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
                 </label>
             </div>
-
             <div class="flex items-center justify-end mt-4">
-                <?php if (Route::has('password.request')): ?>
-                    <a class="underline text-sm hover:text-gray-900" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                <?php endif; ?>
+    <?php if (Route::has('password.request')): ?>
+        <a class="underline text-sm hover:text-gray-900" href="{{ route('password.request') }}">
+            {{ __('Forgot your password?') }}
+        </a>
+    <?php endif; ?>
 
-                <button type="submit" class="x-primary-button ms-3">
-                    {{ __('Log in') }}
-                </button>
-            </div>
+    <?php if (Route::has('admin.register')): ?>
+        <a class="underline text-sm hover:text-gray-900 ms-3" href="{{ route('admin.register') }}">
+            {{ __('Sign Up as Admin') }}
+        </a>
+    <?php endif; ?>
+
+    <button type="submit" class="x-primary-button ms-3">
+        {{ __('Log in') }}
+    </button>
+</div>
+
         </form>
     </div>
 </body>

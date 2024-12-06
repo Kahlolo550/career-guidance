@@ -133,7 +133,7 @@
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <a class="link" href="{{ route('login') }}">
+                <a class="link" href="{{ route('institution.login') }}">
                     Already registered?
                 </a>
 
@@ -143,5 +143,33 @@
             </div>
         </form>
     </div>
+    <script>
+    // Wait for the DOM to fully load before attaching event listeners
+    document.addEventListener('DOMContentLoaded', function () {
+    // Get the "View Courses" link and faculties dropdown
+    const viewCoursesLink = document.getElementById('view-courses');
+    const facultiesDropdown = document.getElementById('faculties-dropdown');
+
+    // Show dropdown on hover
+    viewCoursesLink.addEventListener('mouseenter', function () {
+        facultiesDropdown.style.display = 'block'; // Show the dropdown
+    });
+
+    // Hide dropdown when mouse leaves both the link and dropdown
+    const hideDropdown = function () {
+        facultiesDropdown.style.display = 'none'; // Hide the dropdown
+    };
+
+    // Attach event listeners to hide dropdown
+    viewCoursesLink.addEventListener('mouseleave', hideDropdown);
+    facultiesDropdown.addEventListener('mouseleave', hideDropdown);
+
+    // Keep dropdown visible if hovering over it
+    facultiesDropdown.addEventListener('mouseenter', function () {
+        facultiesDropdown.style.display = 'block'; // Ensure dropdown remains visible
+    });
+});
+
+</script>
 </body>
 </html>

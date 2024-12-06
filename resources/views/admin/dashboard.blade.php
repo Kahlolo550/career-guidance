@@ -5,93 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
-
-        body {
-            background-color: #fff3e0;
-            color: #333;
-        }
-
-        .sidebar {
-            width: 250px;
-            height: 100vh;
-            position: fixed;
-            left: 0;
-            top: 0;
-            background-color: #ff4500;
-            padding-top: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #fff;
-        }
-
-        .sidebar a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 18px;
-            padding: 15px 20px;
-            width: 100%;
-            text-align: center;
-            transition: background-color 0.3s;
-        }
-
-        .sidebar a:hover {
-            background-color: #ff6347;
-        }
-
-        .sidebar h2 {
-            font-size: 24px;
-            margin-bottom: 30px;
-        }
-
-        .content {
-            margin-left: 250px;
-            padding: 20px;
-            background-color: #ffffff;
-            min-height: 100vh;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .content h1 {
-            color: #ff4500;
-            margin-bottom: 20px;
-            font-size: 2rem;
-        }
-
-        .dashboard-image {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .content p {
-            line-height: 1.6;
-            margin-bottom: 20px;
-            font-size: 1rem;
-            color: #555;
-            padding: 10px;
-            border-left: 4px solid #ff4500;
-            background-color: #f9f9f9;
-            border-radius: 4px;
-        }
+        
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <h2>Admin Dashboard</h2>
-        <a href="{{route('admin.profile.edit')}}">Profile</a>
-        <a href="{{ route('admin.dashboard') }}">Home</a>
-        <a href="{{ route('institutions.index') }}">Institutions</a>
-        <a href="{{route('admin.logout')}}">Log out</a>
-    </div>
+@include('admin.layouts.header')
 
     <div class="content">
         <h1>Admin Dashboard</h1>

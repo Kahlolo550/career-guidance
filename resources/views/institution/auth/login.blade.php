@@ -136,16 +136,47 @@
 
             <div class="flex items-center justify-end mt-4">
                 @if (Route::has('password.request'))
-                    <a class="link" href="{{ route('institution.password.request') }}">
+                    <a class="link" href="#">
                         Forgot your password?
                     </a>
                 @endif
 
+                <a href="{{ route('institution.register') }}">Don't have an account? </a></button>
                 <button type="submit" class="primary-button">
                     Log in
                 </button>
+
+
             </div>
         </form>
     </div>
 </body>
+<script>
+    // Wait for the DOM to fully load before attaching event listeners
+    document.addEventListener('DOMContentLoaded', function () {
+    // Get the "View Courses" link and faculties dropdown
+    const viewCoursesLink = document.getElementById('view-courses');
+    const facultiesDropdown = document.getElementById('faculties-dropdown');
+
+    // Show dropdown on hover
+    viewCoursesLink.addEventListener('mouseenter', function () {
+        facultiesDropdown.style.display = 'block'; // Show the dropdown
+    });
+
+    // Hide dropdown when mouse leaves both the link and dropdown
+    const hideDropdown = function () {
+        facultiesDropdown.style.display = 'none'; // Hide the dropdown
+    };
+
+    // Attach event listeners to hide dropdown
+    viewCoursesLink.addEventListener('mouseleave', hideDropdown);
+    facultiesDropdown.addEventListener('mouseleave', hideDropdown);
+
+    // Keep dropdown visible if hovering over it
+    facultiesDropdown.addEventListener('mouseenter', function () {
+        facultiesDropdown.style.display = 'block'; // Ensure dropdown remains visible
+    });
+});
+
+</script>
 </html>

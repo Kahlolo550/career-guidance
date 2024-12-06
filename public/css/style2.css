@@ -1,0 +1,222 @@
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body and general font styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Header and Navigation styles */
+
+header {
+    background-color: white; /* Fully transparent background */
+    color: white;
+    padding: 15px 40px;
+    text-align: center;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15); /* Subtle but deeper shadow for the header */
+  
+    display: flex;
+    justify-content: flex-end; /* Align nav items to the right */
+    align-items: center;
+    z-index: 10;
+    transition: background 0.3s ease, box-shadow 0.3s ease; /* Smooth background and shadow transition */
+    height: 60px;
+}
+
+/* Navigation styles */
+header nav {
+    display: flex;
+    justify-content: flex-end; /* Align nav items to the right */
+    align-items: center;
+    width: auto;
+    border-radius: 5px; /* Subtle rounded corners */
+    background: rgba(0, 77, 153, 0); /* Fully transparent background for navigation */
+    padding: 8px 0; /* Add vertical padding for better spacing */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12); /* Soft shadow below the navigation bar */
+}
+
+header nav a {
+    color: black;
+    text-decoration: none;
+    margin: 0 20px;
+    font-size: 1.1em;
+    font-family: 'Arial', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition for color and scale */
+    position: relative;
+}
+
+header nav a:hover {
+    color: #ffcc00; /* Golden color on hover */
+    transform: scale(1.05); /* Subtle scale effect on hover */
+}
+
+/* Dropdown */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-trigger {
+    cursor: pointer;
+    display: inline-block;
+    padding: 10px 20px;
+    color: #555; /* Lighter text color */
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-trigger:hover {
+    background-color: #34495e;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-left: 10px;
+    background-color: #34495e;
+    border-radius: 4px;
+   
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 20;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px 15px;
+    color: #ecf0f1;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-menu a:hover {
+    background-color: #2c3e50;
+    color: #fff;
+}
+
+/* Show Dropdown Menu on Hover */
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Profile Edit Page styles */
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.container header {
+    margin-bottom: 20px;
+}
+
+.container h2 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-section {
+    margin-bottom: 30px;
+}
+
+.form-section h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Input fields */
+input[type="text"], input[type="email"], input[type="password"], textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    background-color: #f9f9f9;
+}
+
+input[type="submit"], button {
+    background-color: #ff9800;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover, button:hover {
+    background-color: #e68900;
+}
+
+/* Search Suggestions */
+#search-suggestions {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    width: 100%;
+    border: 1px solid #ccc;
+    z-index: 1000;
+    max-height: 300px;
+    overflow-y: auto;
+    border-radius: 4px;
+}
+
+.suggestion {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+}
+/* Success Message */
+.success-message {
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 18px;
+    margin-top: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.suggestion:hover {
+    background-color: #f0f0f0;
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav a {
+        margin: 10px 0;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    .form-section {
+        margin-bottom: 20px;
+    }
+}

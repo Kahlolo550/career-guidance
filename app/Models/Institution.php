@@ -61,7 +61,14 @@ class Institution extends Authenticatable implements MustVerifyEmail
 public function admissions() {
     return $this->hasMany(Admission::class);
 }
-
+public function applications()
+{
+    return $this->hasMany(Application::class);
+}
+public function qualifications()
+{
+    return $this->hasMany(Qualification::class);
+}
 
 
 }

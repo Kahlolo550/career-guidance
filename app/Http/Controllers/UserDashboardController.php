@@ -2,20 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admission;
 use App\Models\Course;
+use App\Models\Admission;
+use App\Models\Application;
 use App\Models\Institution;
-use App\Models\Qualification;
 use Illuminate\Http\Request;
+use App\Models\Qualification;
 
-class UserDashboardController extends Controller
+class UserDashboardController extends Controller{
+
+public function index()
 {
-    public function index()
-    {
-        $courses = Course::with('qualifications')->get();
-        $institutions = Institution::all();
-        return view('dashboard', compact('institutions', 'courses'));
+    $courses = Course::with('qualifications')->get();
+    $institutions = Institution::all();
+    $admissions = Admission::all();
+    $user = auth()->user(); // Fetch the authenticated user
+    
+    // Check if a user is authenticated
+    if (!$user) {
+        return redirect()->route('login')->with('error', 'You must be logged in to access the dashboard.');
     }
+
+    // Fetch applications related to the authenticated user
+    $applications = Application::with('institution', 'course')
+                               ->where('user_id', $user->id)
+                               ->get();
+
+    $institutionId = $institutions->first()->id ?? null;
+
+    return view('dashboard', compact('applications', 'institutions', 'courses', 'institutionId'));
+}
+
 
     public function getQualifications($institutionId)
     {

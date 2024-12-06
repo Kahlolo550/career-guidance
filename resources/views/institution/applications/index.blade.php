@@ -3,150 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Applications for {{ $institution->name }}</title>
-    <link rel="stylesheet" href="{{ asset('css/styles.css') }}"> 
-    <style>body {
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    position: relative;
-    color: #333;
+    <title>Institution Dashboard</title>
+    <!-- Link to external CSS -->
+     
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ asset('/css/style.css') }}" rel="stylesheet"> <!-- External CSS File -->
+</head>
+<body>
+    
+      <!-- Header Navigation -->
+      <header class="header-nav">
+    <nav class="container d-flex justify-content-between align-items-center">
+        <div class="nav-left">
+        </div>
+        <div class="nav-links d-flex align-items-center">
+            <a href="{{ route('institution.home') }}">Home</a>
+            <a href="{{route('institution.qualifications.create')}}">Add Prospectus</a>
+          
+            <li id="nav-p" class="dropdown">
+    <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+    <li id="nav-p">courses</li>
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="{{ route('institution.courses.create', ['institution' => $institution->id]) }}">Add Course</a>
+        <div class="dropdown-submenu">
+            <a class="dropdown-item" href="#" id="view-courses">View Courses</a>
+            <!-- Faculties dropdown -->
+            <div id="faculties-dropdown" class="dropdown-menu" style="display: none;">
+                <p1 class="d" >Choose a Faculty to View Its Courses:</p1>
+                @foreach($faculties as $faculty)
+                    <a class="dropdown-item" href="{{ route('institution.courses.show', ['institutionId' => $institution->id, 'facultyId' => $faculty->id]) }}">
+                        {{ $faculty->name }}
+                    </a>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</li>
+ <div class="dropdown">
+                <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+     
+            <li id="nav-p">Faculties</li>  
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="{{ route('institution.faculties.create', ['institution' => $institution->id]) }}">Add Faculty</a></li>
+                    <li><a class="dropdown-item" href="{{ route('institution.faculties.show',$institution->id) }}">View Faculties</a></li>
+                </ul>
+            </div>
+            
+           
+            <div class="dropdown">
+                <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                  
+
+            <li id="nav-p">Upload and Publish Admissions</li>  
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="{{ route('institution.upload.admission', ['institution' => $institution->id]) }}">Upload Admissions</a></li>
+                    <li><a class="dropdown-item" href="{{ route('view-admissions',$institution->id) }}">Publish Amissions</a></li>
+                </ul>
+            </div>
+            <a href="{{ route('institution.applications', ['institutionId' => $institution->id]) }}">View Applications</a>
+          
+
+            <div class="dropdown">
+                <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                   <img src="{{ asset('storage/' . $institution->profile_photo) }}" alt="Institution Photo" class="rounded-circle" style="width: 40px; height: 40px;">
+                
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="{{ route('institution.profile', $institution->id) }}">Profile</a></li>
+                    <li><a class="dropdown-item" href="{{ route('institution.logout') }}">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+    @if(session('success'))
+    <div class="success-message">
+        {{ session('success') }}
+    </div>
+@endif
+
+    <script>
+      function confirmAction(action, school) {
+    if (action === 'accepted') {
+        const acceptedFromSchool = document.querySelectorAll(`[data-school="${school}"].status-accepted`).length;
+
+        if (acceptedFromSchool >= 2) {
+            alert('Cannot accept more than 2 students from the same school.');
+            return false;
+        }
+    }
+
+    let message = action === 'accepted'
+        ? "Are you sure you want to accept this application?"
+        : "Are you sure you want to reject this application?";
+    return confirm(message);
 }
 
-.background {
-    background-image: url('/images/institution/institution.jpg');
-    background-size: cover;
-    background-position: center;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    filter: blur(8px);
-    z-index: 0;
-}
-
-.overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(255, 255, 255, 0.7);
-    z-index: 1;
-}
-
-.container {
-    display: flex;
-    position: relative;
-    z-index: 2;
-}
-
-.sidebar {
-    width: 250px; 
-    background-color: rgba(255, 255, 255, 0.85);
-    padding: 20px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-}
-
-.content {
-    flex: 1;
-    margin-left: 20px; 
-    padding: 20px;
-}
-
-h1 {
-    color: #007bff;
-    font-size: 32px;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-th, td {
-    padding: 12px;
-    border: 1px solid #ddd;
-    text-align: left;
-    font-size: 16px;
-}
-
-th {
-    background-color: #007bff;
-    color: white;
-    font-weight: bold;
-}
-
-tr:hover {
-    background-color: rgba(0, 123, 255, 0.2);
-}
-
-p {
-    margin: 0;
-}
-
-.no-applications {
-    margin-top: 20px;
-    font-style: italic;
-    color: #666;
-    text-align: center;
-}
-
-.btn {
-    display: block;
-    padding: 12px;
-    margin: 10px 0;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, transform 0.2s;
-    text-align: center;
-}
-
-.btn:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
-}
-
-.notice {
-    margin-top: 15px;
-    font-size: 12px;
-    color: #333;
-    text-align: center;
-}
-
-
-    </style>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Applications for {{ $institution->name }}</title>
-    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-    <style>
-        
-    </style>
+    </script>
 </head>
 <body>
     <div class="background"></div>
     <div class="overlay"></div>
     <div class="container">
-        <div class="sidebar">
-            <h2>Navigation</h2>
-            <a href="{{route('institution.logout')}}" class="btn">log out</a>
-            <a href="{{url('/institution/home')}}" class="btn"><i class="fas fa-plus"></i>Home</a>
-        </div>
+        
         <div class="content">
             <h1>Applications for {{ $institution->name }}</h1>
 
@@ -163,15 +125,16 @@ p {
                             <th>Grades</th>
                             <th>Course</th>
                             <th>Submitted At</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($applications as $application)
                             <tr>
                                 <td>{{ $application->candidate_number }}</td>
-                                <td>{{ $application->name }}</td> 
-                                <td>{{ $application->surname }}</td> 
-                                <td>{{ $application->former_school }}</td> 
+                                <td>{{ $application->name }}</td>
+                                <td>{{ $application->surname }}</td>
+                                <td>{{ $application->former_school }}</td>
                                 <td>
                                     @php
                                         $grades = json_decode($application->grades, true);
@@ -179,7 +142,7 @@ p {
                                     @if(is_array($grades))
                                         @foreach($grades as $qualificationId => $grade)
                                             @php
-                                                $qualification = \App\Models\Qualification::find($qualificationId); 
+                                                $qualification = \App\Models\Qualification::find($qualificationId);
                                             @endphp
                                             <p>{{ $qualification ? $qualification->subject_name : 'Unknown Subject' }}: {{ $grade }}</p>
                                         @endforeach
@@ -189,6 +152,20 @@ p {
                                 </td>
                                 <td>{{ $application->course ? $application->course->name : 'N/A' }}</td>
                                 <td>{{ $application->created_at->format('Y-m-d H:i:s') }}</td>
+                                <td>
+                                    <form method="POST" action="{{ route('applications.updateStatus', $application->id) }}" onsubmit="return confirmAction(this.querySelector('[name=status]').value)">
+                                        @csrf
+                                        @method('PUT')
+                                        @if($application->status === 'accepted')
+                                            <span class="badge badge-success">Accepted</span>
+                                        @elseif($application->status === 'rejected')
+                                            <span class="badge badge-danger">Rejected</span>
+                                        @else
+                                            <button type="submit" name="status" value="accepted" class="btn btn-success btn-sm">Accept</button>
+                                            <button type="submit" name="status" value="rejected" class="btn btn-danger btn-sm">Reject</button>
+                                        @endif
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -196,5 +173,34 @@ p {
             @endif
         </div>
     </div>
+    <script>
+    // Wait for the DOM to fully load before attaching event listeners
+    document.addEventListener('DOMContentLoaded', function () {
+    // Get the "View Courses" link and faculties dropdown
+    const viewCoursesLink = document.getElementById('view-courses');
+    const facultiesDropdown = document.getElementById('faculties-dropdown');
+
+    // Show dropdown on hover
+    viewCoursesLink.addEventListener('mouseenter', function () {
+        facultiesDropdown.style.display = 'block'; // Show the dropdown
+    });
+
+    // Hide dropdown when mouse leaves both the link and dropdown
+    const hideDropdown = function () {
+        facultiesDropdown.style.display = 'none'; // Hide the dropdown
+    };
+
+    // Attach event listeners to hide dropdown
+    viewCoursesLink.addEventListener('mouseleave', hideDropdown);
+    facultiesDropdown.addEventListener('mouseleave', hideDropdown);
+
+    // Keep dropdown visible if hovering over it
+    facultiesDropdown.addEventListener('mouseenter', function () {
+        facultiesDropdown.style.display = 'block'; // Ensure dropdown remains visible
+    });
+});
+
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

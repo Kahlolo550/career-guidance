@@ -213,21 +213,26 @@
         }
     </style>
     <script>
-        function toggleInstitutionForm() {
+          <script>
+     
+        function confirmDelete(event) {
+            var isConfirmed = window.alert("Are you sure you want to delete this faculty?");
+            if (!isConfirmed) {
+                event.preventDefault(); // Prevent the form submission if the user cancels
+
+            }
+            function toggleInstitutionForm() {
             var form = document.getElementById('add-institution-form');
             form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
         }
+        }
     </script>
+     
+  
 </head>
 <body>
 
-    <div class="sidebar">
-        <h2>Admin Dashboard</h2>
-        <a href="{{ route('admin.dashboard') }}">Home</a>
-        <a href="{{ route('institutions.index') }}">Institutions</a>
-        <a href="{{route('admin.logout')}}">Log out</a>
-    </div>
-
+@include('admin.layouts.header')
     <div class="content">
         <h1>Institutions</h1>
         @if(session('success'))
@@ -278,6 +283,15 @@
             </div>
         @endif
     </div>
+    <script>
+        // Function to confirm deletion
+function confirmDelete(event) {
+    if (!confirm("Are you sure you want to delete this faculty?")) {
+        event.preventDefault(); // Prevent the form submission if the user cancels
+    }
+}
+
+    </script>
 
 </body>
 </html>

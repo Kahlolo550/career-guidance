@@ -1,0 +1,538 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f7fc;
+    color: #333;
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    
+}
+
+body::before {
+    content: '';
+    margin-top: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 600px;
+    background-image: url('/images/background.jpg'); /* Path to your image */
+    background-size: 50%; /* Reduce the size of the background image */
+    background-position: center center; /* Center the background image */
+    background-repeat: no-repeat; /* Prevent image from repeating */
+    filter: blur(8px); 
+    /* Apply blur effect */
+    z-index: -1; /* Put the blurred background behind the content */
+}
+
+/* Optional: Apply a transparent overlay */
+body::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+   /* Dark semi-transparent overlay */
+    z-index: 0; /* Ensure the overlay sits above the blurred background */
+}
+
+/* Header styles */
+header {
+    background: rgba(0, 77, 153, 0); /* Fully transparent background */
+    color: white;
+    padding: 15px 40px;
+    text-align: center;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15); /* Subtle but deeper shadow for the header */
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: flex-end; /* Align nav items to the right */
+    align-items: center;
+    z-index: 10;
+    transition: background 0.3s ease, box-shadow 0.3s ease; /* Smooth background and shadow transition */
+    height: 60px;
+}
+
+/* Navigation styles */
+header nav {
+    display: flex;
+    justify-content: flex-end; /* Align nav items to the right */
+    align-items: center;
+    width: auto;
+    border-radius: 5px; /* Subtle rounded corners */
+    background: rgba(0, 77, 153, 0); /* Fully transparent background for navigation */
+    padding: 8px 0; /* Add vertical padding for better spacing */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12); /* Soft shadow below the navigation bar */
+}
+
+header nav a {
+    color: black;
+    text-decoration: none;
+    margin: 0 20px;
+    font-size: 1.1em;
+    font-family: 'Arial', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition for color and scale */
+    position: relative;
+}
+
+header nav a:hover {
+    color: #ffcc00; /* Golden color on hover */
+    transform: scale(1.05); /* Subtle scale effect on hover */
+}
+
+/* Main content section */
+.main-content {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 80vh;
+    width: 100%;
+    position: relative;
+}
+
+/* Carousel styles */
+.carousel {
+    margin-top: 190px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end; /* Align images to the right */
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.carousel-container {
+    display: flex;
+    justify-content: flex-end; /* Align carousel items to the right */
+    align-items: center;
+    position: relative;
+    transition: transform 1s ease-in-out;
+}
+
+/* Carousel Items */
+.carousel-item {
+    width: 400px; /* Image width */
+    height: 250px; /* Image height */
+    margin-right: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    visibility: visible;
+    position: absolute;
+    filter: blur(5px); /* Apply blur to non-active images */
+    z-index: 0; /* Push back non-active images */
+    transition: opacity 0.5s ease-in-out, transform 1s ease-in-out, filter 1s ease-in-out;
+}
+
+.carousel-item.active {
+    opacity: 1;
+    visibility: visible;
+    filter: none; /* Remove blur on active image */
+    z-index: 2; /* Bring active image to the front */
+    transform: scale(1); /* Keep the active image at full size */
+}
+
+/* Non-active images are shrunk and distanced */
+.carousel-item:not(.active) {
+    transform: scale(0.75) translateX(250px); /* Move non-active images further right */
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Description only visible on the active image */
+.image-content {
+    display: none; /* Hide description for non-active images */
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+    padding: 15px;
+    border-radius: 8px;
+    max-width: 220px; /* Reduced max-width */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+.carousel-item.active .image-content {
+    display: block; /* Show description for active image */
+}
+
+.image-title {
+    font-size: 1.2em; /* Smaller title */
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #004d99;
+}
+
+.image-description {
+    font-size: 0.9em; /* Smaller description */
+    max-width: 220px;
+    margin-top: 8px;
+    line-height: 1.4;
+    font-weight: 400;
+    color: #333;
+}
+
+/* Footer styles */
+footer {
+    background-color: rgba(0, 0, 0, 0.2); /* Transparent black background */
+    color: white;
+    text-align: center;
+    padding: 20px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for a floating effect */
+}
+
+footer p {
+    font-size: 1em;
+    margin: 0;
+    font-family: 'Arial', sans-serif; /* Clean font for footer text */
+}
+
+/* Media Query for responsiveness */
+@media (max-width: 768px) {
+    footer {
+        padding: 15px; /* Adjust padding for mobile */
+    }
+
+    footer p {
+        font-size: 0.9em; /* Slightly smaller text on mobile */
+    }
+}
+
+/* Styling for the "Why Choose Us" section */
+.why-choose-us {
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 30px; /* Increased padding for better spacing */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+    position: relative;
+    font-size: 12px; /* Increased font size for readability */
+}
+
+/* Heading styling */
+.why-choose-us h2 {
+    font-size: 16px; /* Increased size for visibility */
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 15px; /* Increased space for readability */
+}
+
+/* Paragraph styling */
+.why-choose-us p {
+    font-size: 14px; /* Increased font size */
+    line-height: 1.6; /* Slightly increased line-height */
+    color: blue;
+    text-align: center;
+    margin-bottom: 20px; /* Increased space between paragraph and list */
+}
+
+/* List styling */
+.why-choose-us ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px; /* Increased gap for better spacing */
+}
+
+/* List item styling */
+.why-choose-us ul li {
+    background-color: #ffffff;
+    padding: 20px; /* Increased padding for better spacing */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    font-size: 14px; /* Increased font size for better readability */
+}
+
+/* Hover effect for list items */
+.why-choose-us ul li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Strong text styling */
+.why-choose-us ul li strong {
+    font-weight: bold;
+    color: #007bff;
+    font-size: 14px; /* Increased size for emphasis */
+}
+
+/* Responsive styling for smaller screens */
+@media (max-width: 768px) {
+    .why-choose-us {
+        font-size: 14px; /* Slightly larger font size on smaller screens */
+    }
+
+    .why-choose-us h2 {
+        font-size: 18px; /* Larger heading on mobile */
+    }
+
+    .why-choose-us p {
+        font-size: 16px; /* Larger paragraph text for readability */
+    }
+
+    .why-choose-us ul {
+        grid-template-columns: 1fr; /* Stack items in a single column on mobile */
+    }
+
+    .why-choose-us ul li {
+        font-size: 16px; /* Increased font size for better readability on mobile */
+    }
+}
+
+/* Optional: Adding subtle hover effect for touch devices */
+.why-choose-us ul li:active {
+    background-color: #f0f0f0; /* Light background change on tap */
+}
+/* Section Styles */
+.join-us-now {
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.3); /* Optional: Darken content area slightly */
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 10; /* Ensures it is above other content */
+}
+
+.join-us-now h2, .join-us-now p, .btn-join-us {
+    color: #fff; /* Ensure text is visible over darkened background */
+}
+
+.btn-join-us {
+    display: flex; /* Centers text in the button */
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    width: 150px;
+    background-color: blue;
+    border-radius: 13px;
+    z-index: 10; /* Bring button to the front */
+}
+.btn-join-us:hover{
+    background-color: greenyellow;
+}
+
+.btn-join-us a {
+    text-decoration: none;
+    color: #f0f0f0;
+    display: inline-block; /* Ensures anchor spans the button */
+    width: 100%; /* Fill button width */
+    height: 100%; /* Fill button height */
+    text-align: center;
+    line-height: 30px; /* Align text vertically */
+}
+
+.btn-join-us a:hover {
+    cursor: pointer;
+    color: green;
+}
+
+
+/* Form Container */
+.form-container {
+    max-width: 900px; /* Increase form width */
+    width: 100%;
+    height: auto; /* Allow height to adjust based on content */
+    background-color: rgba(0, 0, 0, 0.7); /* Black transparent background */
+    padding: 20px; /* Reduced padding to make the form less tall */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Form Header */
+.form-container h2 {
+    text-align: center;
+    font-size: 1.8rem; /* Slightly smaller header */
+    margin-bottom: 20px;
+}
+
+/* Form Inputs */
+.form-container form input[type="text"],
+.form-container form input[type="email"],
+.form-container form input[type="password"] {
+    width: 100%;
+    padding: 12px; /* Reduced padding for compact form */
+    margin: 10px 0; /* Reduced margin for compact form */
+    border: 1px solid #fff;
+    border-radius: 4px;
+    font-size: 1.2rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+/* Form Labels */
+.form-container form label {
+    font-size: 1.2rem;
+    margin-bottom: 8px; /* Reduced margin */
+    display: block;
+}
+
+/* Submit Button */
+.form-container form button {
+    width: 100%;
+    padding: 12px; /* Reduced padding */
+    background-color: #6c63ff;
+    color: white;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-container form button:hover {
+    background-color: #5a52e1;
+}
+
+/* Error Messages */
+.form-container form .error {
+    color: red;
+    font-size: 1rem;
+    margin-top: 15px;
+    text-align: center;
+}
+
+/* Links */
+.form-container form a {
+    display: block;
+    text-align: center;
+    font-size: 1rem;
+    margin-top: 20px;
+    color: #6c63ff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.form-container form a:hover {
+    text-decoration: underline;
+}
+/* Styling the form container */
+form {
+    max-width:800px; /* Increased the form width */
+    margin: 50px auto;
+    padding: 30px; /* Increased padding for more space */
+    background-color: rgba(0, 0, 0, 0.7); /* Black background with transparency */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Darker shadow for better visibility */
+    color: #fff; /* White text color for contrast */
+  }
+  
+  /* Styling form fields */
+  form input[type="text"],
+  form input[type="email"],
+  form input[type="password"] {
+    width: 100%;
+    padding: 15px; /* Increased padding */
+    margin: 15px 0; /* Increased margin */
+    border: 1px solid #fff; /* White border for contrast */
+    border-radius: 4px;
+    font-size: 1.2rem; /* Larger font size */
+    background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent white background */
+    color: #fff; /* White text */
+  }
+  
+  /* Styling form labels */
+  form label {
+    font-size: 1.2rem; /* Increased label font size */
+    margin-bottom: 10px;
+    display: block;
+    font-weight: 500;
+    color: #fff; /* White text for labels */
+  }
+  
+  /* Submit button styling */
+  form button {
+    width: 100%;
+    padding: 15px; /* Increased padding */
+    background-color: #6c63ff;
+    color: #ffffff;
+    font-size: 1.2rem; /* Larger font size */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  form button:hover {
+    background-color: #5a52e1;
+  }
+  
+  /* Styling the error message */
+  form .error {
+    color: red;
+    font-size: 1rem;
+    margin-top: 15px;
+    text-align: center;
+  }
+  
+  /* Styling the "Already have an account?" link */
+  form a {
+    display: block;
+    text-align: center;
+    font-size: 1rem; /* Increased font size for links */
+    margin-top: 20px;
+    color: #6c63ff;
+    text-decoration: none;
+    cursor: pointer; /* Ensures the link behaves like a clickable button */
+  }
+  
+  form a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Preventing the form container from blocking the links */
+  form {
+    position: relative;
+    z-index: 1;
+  }
+  
+  form a {
+    z-index: 2;
+    position: relative;
+  }
+  
+
+
+
+
+
+
+
+  /* contact*/
+
+  

@@ -1,0 +1,139 @@
+/* General styling for the contact page */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Background image with fixed and blur effect */
+.background-image {
+    width: 100%;
+    height: 100vh; /* Full screen height */
+    object-fit: cover;
+    position: fixed; /* Make the image fixed */
+    top: 0;
+    left: 0;
+    z-index: -1; /* Put the image behind the content */
+    filter: blur(3px); /* Apply the blur effect */
+}
+
+/* Contact Us Section */
+.contact-us {
+    text-align: center;
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.8); /* Slight transparency */
+    margin-top: 60px; /* To overlap with the background image */
+    position: relative; /* Ensure this section is on top of the background */
+}
+
+/* Paragraph text inside the contact section */
+.contact-us p {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Contact form styling */
+.contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.contact-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-form label {
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+.contact-form input, .contact-form textarea {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+.contact-form button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1em;
+}
+
+.contact-form button:hover {
+    background-color: #45a049;
+}
+
+/* Contact Details */
+.contact-details {
+    background-color: #ffffff;
+    padding: 20px;
+    margin-top: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.contact-details h2 {
+    font-size: 1.8em;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.contact-details ul {
+    list-style: none;
+    padding: 0;
+}
+
+.contact-details li {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+
+.contact-details i {
+    margin-right: 10px;
+    color: #4CAF50;
+}
+
+/* Social Media Links */
+.social-media {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.social-media h2 {
+    font-size: 1.8em;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.social-media a {
+    margin: 0 15px;
+    color: #333;
+    font-size: 2em;
+    text-decoration: none;
+}
+
+.social-media a:hover {
+    color: #4CAF50;
+}
+
+/* Map Section */
+.map {
+    margin-top: 50px;
+}
+
+.map iframe {
+    width: 100%;
+    height: 400px;
+    border: 0;
+}

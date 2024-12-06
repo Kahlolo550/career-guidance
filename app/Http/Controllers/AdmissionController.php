@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Faculty;
 use App\Models\Admission;
 use App\Models\Institution;
 use Illuminate\Http\Request;
@@ -14,11 +15,11 @@ class AdmissionController extends Controller
     {
       
         $institution = Institution::findOrFail($institutionId);
-
-       
+         
+       $institutions = Institution::all();
         $admissions = Admission::where('institution_id', $institutionId)->get();
 
-        return view('admissions.dashboard', compact('admissions', 'institution'));
+        return view('admissions.dashboard', compact('admissions', 'institution','institutions'));
     }
 
     public function create()
@@ -26,37 +27,75 @@ class AdmissionController extends Controller
     
         return view('admissions.upload');
     }
-
-    public function store(Request $request, $institutionId)
-    {
+    public function upload(){
+        // Fetch all institutions
+        $institutions = Institution::all();
         
+        // You can either fetch a single institution here if needed
+        $institution = Institution::first();  // Or use `find($id)` to get a specific institution
+        
+       $faculties=Faculty::all();
+        // Return the view
+        return view('institution.admissions.upload', compact('institutions', 'institution','faculties'));
+    }
+    
+    public function store( Request $request, $institutionId)
+    {
+        // Validate the incoming request
         $request->validate([
             'title' => 'required|string|max:255',
             'details' => 'required|string',
-            'document' => 'required|file|mimes:pdf|max:2048', 
-            'institution_id' => 'required|exists:institutions,id',
+            'document' => 'required|file|mimes:pdf|max:2048',
         ]);
-
-        $documentPath = $request->file('document')->store('admissions', 'public'); 
-
+    
+        // Ensure the institution ID exists and is valid
+        $institution = Institution::find($institutionId);
+    
+        if (!$institution) {
+            return redirect()->back()->withErrors(['error' => 'Invalid Institution ID.']);
+        }
+    
+        // Store the uploaded document
+        $documentPath = $request->file('document')->store('admissions', 'public');
+    
+        // Create a new Admission record
         Admission::create([
             'title' => $request->title,
             'details' => $request->details,
             'document' => $documentPath,
-            'institution_id' => $request->institution_id,
-            'published' => true, 
+            'institution_id' => $institutionId, // Use the institution ID as passed from the route
+            'published' => true,
         ]);
-
-        return redirect()->back()
-                         ->with('success', 'Admission uploaded and published successfully!');
+    
+        // Redirect back with a success message
+        return redirect()->back()->with('success', 'Admission uploaded and published successfully!');
     }
-
-    public function published()
+    
+    public function published($institutionId)
     {
-       $institutions=Institution::all();
-        $admissions = Admission::where('published', true)->get();
-        return view('admissions.published', compact('admissions','institutions'));
+        // Get all institutions for the navigation dropdown or list
+        $institutions = Institution::all();
+    
+        // Find the specific institution by ID
+        $institution = Institution::findOrFail($institutionId); // Throws 404 if not found
+        $admissions = $institution->admissions()->where('published', true)->get();
+
+    
+        // Get admissions for the selected institution that are published
+        $admissions = Admission::where('institution_id', $institutionId)
+            ->where('published', true)
+            ->get();
+            $admissions = Admission::where('institution_id', $institutionId)
+    ->where('published', true)
+    ->get();
+
+
+
+    
+        // Return data to the view
+        return view('admissions.published', compact('institutions', 'institution', 'admissions'));
     }
+    
 
     public function showInstitutionDashboard($institutionId)
     {
@@ -73,10 +112,11 @@ class AdmissionController extends Controller
        
         $admission = Admission::findOrFail($id);
         
+       $faculties=Faculty::all();
       
         $admission->published = !$admission->published;
         $admission->save();
-
+        
         return redirect()->back()->with('success', 'Admission status updated successfully!');
     }
 

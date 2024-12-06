@@ -3,190 +3,110 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{asset('/css/student.css')}}">
+    
+    <link rel="stylesheet" href="{{asset('/css/style1.css')}}">
     <title>Laravel Career Guidance</title>
 
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-    <style>
-        body {
-            font-family: 'Figtree', sans-serif;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        .background {
-            background-image: url('{{ asset('images/background.jpg') }}');
-            background-size: cover;
-            background-position: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            filter: blur(8px);
-            z-index: 1;
-        }
-
-        header {
-            background-color: transparent; /* No background color */
-            padding: 1rem;
-            color: white;
-            text-align: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        header a {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        header a:hover {
-            color: #FF2D20; /* Change color on hover */
-        }
-
-        .main-content {
-            text-align: center;
-            position: relative;
-            z-index: 2;
-            overflow: hidden;
-            height: 80vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .carousel-item {
-            display: none;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-            text-align: center;
-        }
-
-        .carousel-item.active {
-            display: block;
-            opacity: 1;
-        }
-
-        .image-box {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            margin: 10px;
-            padding: 20px;
-            width: 300px;
-            transition: transform 0.3s;
-        }
-
-        .image-box img {
-            width: 100%;
-            height: auto;
-            border-bottom: 2px solid #FF2D20;
-            border-radius: 8px 8px 0 0;
-        }
-
-        .image-title {
-            font-size: 1.2em;
-            margin: 10px 0 5px;
-            color: #333;
-        }
-
-        .image-description {
-            font-size: 0.9em;
-            color: #666;
-            padding: 0 10px 10px;
-            text-align: justify;
-        }
-
-        .link-button {
-            display: inline-block;
-            padding: 10px 20px;
-            margin: 10px;
-            color: white;
-            background-color: #FF2D20;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-
-        .link-button:hover {
-            background-color: #c72a17;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-    <div class="background"></div>
-
     <header>
-        <h1>Welcome to Our Career Guidance Application</h1>
-        <div>
+        <nav>
             @if (Route::has('login'))
-                <nav class="-mx-3 flex flex-1 justify-end">
-                    @auth
-                        <a href="{{ url('/dashboard') }}" class="rounded-md px-3 py-2">Dashboard</a>
-                    @else
-                        <a href="{{ route('login') }}" class="rounded-md px-3 py-2">Login</a>
-                        <a href="{{ route('register') }}" class="rounded-md px-3 py-2">Register</a>
-                        <a href="{{ route('admin.login') }}" class="rounded-md px-3 py-2">Admin Login</a>
-                        <a href="{{ route('admin.register') }}" class="rounded-md px-3 py-2">Admin Register</a>
-                        <a href="{{ route('institution.register') }}" class="rounded-md px-3 py-2">Institution Register</a>
-                        <a href="{{ route('institution.login') }}" class="rounded-md px-3 py-2">Institution Login</a>
-                    @endauth
-                </nav>
+                @auth
+                    <a href="{{ url('/dashboard') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                @else
+                    <a href="{{ route('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    <a href="{{ route('register') }}"><i class="fas fa-user-plus"></i> Join Us Now</a>
+                    <a href="{{route('student.about')}}"><i class="fas fa-info-circle"></i> About Us</a>
+                    <a href="{{route('student.contact')}}"><i class="fas fa-envelope"></i> Contact Us</a>
+                @endauth
             @endif
-        </div>
+        </nav>
     </header>
 
     <main class="main-content">
-        <div class="carousel-item active">
-            <div class="image-box">
-                <img src="{{ asset('images/business.jpg') }}" alt="Business">
-                <h3 class="image-title">Business</h3>
-                <p class="image-description">Become a leader in the business world. Explore courses and resources that can guide you towards starting your own enterprise or climbing the corporate ladder!</p>
+        <section class="why-choose-us">
+            <h2><i class="fas fa-check-circle"></i> Why Choose Us?</h2>
+            <p>We offer personalized career guidance, expert advice, and a vast network of professionals in various fields. With our platform, you'll have the resources and support needed to achieve your career goals. Here's why you should choose us:</p>
+            <ul>
+                <li><strong><i class="fas fa-chalkboard-teacher"></i> Expert Guidance:</strong> Receive guidance from industry professionals and career coaches.</li>
+                <li><strong><i class="fas fa-cogs"></i> Tailored Resources:</strong> Access resources tailored to your career goals and learning style.</li>
+                <li><strong><i class="fas fa-users"></i> Networking Opportunities:</strong> Connect with experts, peers, and mentors in your field.</li>
+                <li><strong><i class="fas fa-book"></i> Career-Focused Courses:</strong> Take courses designed to develop skills that employers are looking for.</li>
+            </ul>
+        </section>
+
+        <section class="carousel">
+            <div class="carousel-container">
+                <!-- Carousel Items (same as before) -->
+                <div class="carousel-item active">
+                    <img src="{{ asset('images/business.jpg') }}" alt="Business">
+                    <div class="image-content">
+                        <h3 class="image-title"><i class="fas fa-briefcase"></i> Business</h3>
+                        <p class="image-description">Become a leader in the business world. Explore courses and resources that can guide you towards starting your own enterprise or climbing the corporate ladder!</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ asset('images/doctor.jpg') }}" alt="Doctor">
+                    <div class="image-content">
+                        <h3 class="image-title"><i class="fas fa-user-md"></i> Doctor</h3>
+                        <p class="image-description">Embark on a rewarding journey to become a doctor. Learn about the medical field, training programs, and the impact you can have on people's lives.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ asset('images/tourism.jpg') }}" alt="Tourism">
+                    <div class="image-content">
+                        <h3 class="image-title"><i class="fas fa-suitcase-rolling"></i> Tourism</h3>
+                        <p class="image-description">Pursue a career in tourism and hospitality. Discover opportunities to travel and engage with diverse cultures while building a fulfilling career.</p>
+                    </div>
+                </div>
+                
+                <!-- Non-Active Image 4 -->
+                <div class="carousel-item">
+                    <img src="{{ asset('images/design.jpg') }}" alt="Design">
+                    <div class="image-content">
+                        <h3 class="image-title"><i class="fas fa-paint-brush"></i> Design</h3>
+                        <p class="image-description">Unleash your creativity in the field of design. Learn how to create visually stunning and impactful designs that captivate audiences.</p>
+                    </div>
+                </div>
+
+                <!-- Non-Active Image 5 -->
+                <div class="carousel-item">
+                    <img src="{{ asset('images/engineer.jpg') }}" alt="Engineer">
+                    <div class="image-content">
+                        <h3 class="image-title"><i class="fas fa-cogs"></i> Engineer</h3>
+                        <p class="image-description">Join the ranks of innovators as an engineer. Explore various engineering disciplines and how you can contribute to solving real-world problems.</p>
+                    </div>
+                </div>
+
+                <!-- Non-Active Image 6 -->
+                <div class="carousel-item">
+                    <img src="{{ asset('images/software-eg.jpg') }}" alt="Software Development">
+                    <div class="image-content">
+                        <h3 class="image-title"><i class="fas fa-laptop-code"></i> Software Development</h3>
+                        <p class="image-description">Dive into the world of technology as a software developer. Learn coding skills and how to create software that changes the way we live and work.</p>
+                    </div>
+                </div>
+
+                <!-- More carousel items as before -->
             </div>
-        </div>
-        <div class="carousel-item">
-            <div class="image-box">
-                <img src="{{ asset('images/doctor.jpg') }}" alt="Doctor">
-                <h3 class="image-title">Doctor</h3>
-                <p class="image-description">Embark on a rewarding journey to become a doctor. Learn about the medical field, training programs, and the impact you can have on people's lives.</p>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <div class="image-box">
-                <img src="{{ asset('images/tourism.jpg') }}" alt="Tourism">
-                <h3 class="image-title">Tourism</h3>
-                <p class="image-description">Pursue a career in tourism and hospitality. Discover opportunities to travel and engage with diverse cultures while building a fulfilling career.</p>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <div class="image-box">
-                <img src="{{ asset('images/design.jpg') }}" alt="Design">
-                <h3 class="image-title">Design</h3>
-                <p class="image-description">Unleash your creativity in the field of design. Learn how to create visually stunning and impactful designs that captivate audiences.</p>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <div class="image-box">
-                <img src="{{ asset('images/engineer.jpg') }}" alt="Engineer">
-                <h3 class="image-title">Engineer</h3>
-                <p class="image-description">Join the ranks of innovators as an engineer. Explore various engineering disciplines and how you can contribute to solving real-world problems.</p>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <div class="image-box">
-                <img src="{{ asset('images/software-eg.jpg') }}" alt="Software">
-                <h3 class="image-title">Software Development</h3>
-                <p class="image-description">Dive into the world of technology as a software developer. Learn coding skills and how to create software that changes the way we live and work.</p>
-            </div>
-        </div>
+        </section>
+
+        <!-- Join Us Now Section -->
+        <section class="join-us-now">
+            <h2><i class="fas fa-arrow-right"></i> Ready to Take the Next Step?</h2>
+            <p>Join our platform today to get the guidance, resources, and support you need to succeed in your chosen career path. Don't wait any longer — start your journey with us now!</p>
+            <div class="btn-join-us"><a href="{{ route('register') }}"><i class="fas fa-user-plus"></i> Join Us Now</a></div>
+        </section>
     </main>
+
+    <footer>
+        <p>&copy; 2024 Career Guidance Application | All Rights Reserved</p>
+    </footer>
 
     <script>
         let currentIndex = 0;
@@ -198,7 +118,7 @@
             items[currentIndex].classList.add('active');
         }
 
-        setInterval(showNextItem, 3000); // Increased speed: 3 seconds for each item
+        setInterval(showNextItem, 3000); // Change item every 3 seconds
     </script>
 </body>
 </html>

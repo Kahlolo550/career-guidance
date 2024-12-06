@@ -1,0 +1,162 @@
+body {
+    background-color: #0A3D4A; /* Dark teal background */
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* Header Navigation */
+.header-nav {
+    padding: 15px 30px;
+    text-align: right;
+    background-color: rgba(0, 0, 0, 0.8); /* Slight transparency for the header */
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header-nav a {
+    color: #fff;
+    margin-right: 25px;
+    font-size: 18px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.header-nav a:hover {
+    color: #ff8c00; /* Hover color - orange */
+}
+
+.dropdown-menu {
+    background-color: rgb(17, 15, 15);
+}
+
+#dropdownMenuButton {
+    color: red;
+    background-color: transparent;
+    border: none;
+    padding: 10px 15px;
+    font-size: 19px;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+#dropdownMenuButton:hover {
+    color: #007bff;
+}
+
+#dropdownMenuButton .dropdown-toggle-icon {
+    margin-left: 5px;
+    font-size: 18px;
+}
+
+#dropdownMenuButton:focus {
+    box-shadow: none;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse; /* Ensures borders between cells are merged */
+    margin-top: 20px;
+    background-color: #1e3d59; /* Neveblue background */
+    color: white; /* White text */
+    border: 1px solid #fff; /* White border around the entire table */
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #fff; /* White borders inside the table, between cells */
+}
+
+table th {
+    background-color: #1e3d59; /* Neveblue background for header */
+    color: white; /* White text in header */
+    font-size: 1.1rem;
+}
+
+table td {
+    font-size: 1rem;
+}
+
+/* Grades Section */
+td p {
+    margin: 5px 0;
+    font-size: 0.9rem;
+    color: #ddd; /* Slightly lighter text color for grade details */
+}
+
+/* Buttons */
+button {
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    border-radius: 4px;
+}
+
+button.btn-sm {
+    padding: 6px 12px;
+}
+
+button.btn-success {
+    background-color: #28a745;
+    color: white;
+}
+
+button.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+/* Badge Styling */
+.badge {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.badge-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.badge-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Form Styling */
+form {
+    display: inline-block;
+}
+
+form button {
+    margin-right: 8px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    table th, table td {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+}
+
+#nav-p {
+    text-decoration: none;
+    list-style: none;
+    color: white;
+}

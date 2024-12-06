@@ -1,0 +1,426 @@
+/* Sidebar Styling */
+.sidebar {
+    width: 250px;
+    background-color: #FF4500; /* Orange-Red */
+    padding: 20px;
+    color: #fff;
+    position: fixed;
+    height: 100%;
+}
+
+/* Links in Sidebar */
+.sidebar a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.sidebar a:hover {
+    background-color: #FF6347; /* Lighter Orange-Red */
+}
+
+/* Admissions Dropdown */
+.admissions-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.admissions-menu .dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #FF6347; /* Lighter Orange-Red */
+    padding: 10px;
+    width: 100%;
+}
+
+.admissions-menu:hover .dropdown {
+    display: block;
+}
+
+.admissions-menu .dropdown select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #FF4500; /* Orange-Red border */
+}
+
+/* Icon Spacing */
+.sidebar a i {
+    margin-right: 10px;
+}
+
+/* Sidebar Heading Styling */
+.sidebar h2 {
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Active Link (Optional) */
+.sidebar a.active {
+    background-color: #FF8C00; /* Darker Orange-Red */
+}
+.bar{
+    background-color: #FF4500;
+    width: 100%;
+    height: 30px;
+}
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #fff3e0;
+    color: #333;
+}
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: #ff4500;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+}
+
+.sidebar a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 15px 20px;
+    width: 100%;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: #ff6347;
+}
+
+.sidebar h2 {
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+
+.content {
+    margin-left: 250px;
+    padding: 20px;
+    background-color: #ffffff;
+    min-height: 100vh;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.content h1 {
+    color: #ff4500;
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+.dashboard-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.content p {
+    line-height: 1.6;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    color: #555;
+    padding: 10px;
+    border-left: 4px solid #ff4500;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+}
+/* Page Layout and Form Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.form-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+h1 {
+    font-size: 28px;
+    text-align: center;
+    color: #FF4500; /* Orange-Red */
+    margin-bottom: 20px;
+}
+
+/* Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+select, input {
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #FF4500; /* Orange-Red border */
+    outline: none;
+}
+
+select:focus, input:focus {
+    border-color: #FF6347; /* Lighter Orange-Red */
+}
+
+button {
+    padding: 12px;
+    background-color: #FF4500; /* Orange-Red */
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #FF6347; /* Lighter Orange-Red */
+}
+
+button:active {
+    background-color: #FF8C00; /* Darker Orange-Red */
+}
+
+/* Message Styling */
+.message {
+    color: #FF4500;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .form-container {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    select, input {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    button {
+        font-size: 14px;
+    }
+}
+/* Success message styles */
+.success-message {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    padding: 15px;
+    border-radius: 5px;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+    animation: slideIn 1s ease-out;
+}
+
+/* Animation for the success message */
+@keyframes slideIn {
+    0% {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    color: #333;
+}
+
+.back-button {
+    text-decoration: none;
+    color: #007bff;
+    font-size: 16px;
+    margin-bottom: 20px;
+    display: inline-block;
+    padding: 8px 15px;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+}
+
+.back-button svg {
+    margin-right: 5px;
+}
+
+.faculties {
+    margin-top: 20px;
+}
+
+button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+.add-faculty-form {
+    display: none;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.add-faculty-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.add-faculty-form button {
+    background-color: #007bff;
+    margin-top: 10px;
+    width: 100%;
+    padding: 10px;
+}
+
+.add-faculty-form button:hover {
+    background-color: #0056b3;
+}
+
+table {
+    margin-left: 150px;
+    width: 90%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color:#ff4500;
+    color: white;
+}
+
+table td a {
+    background-color: #ff4500;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+table td a:hover {
+    background-color: #138496;
+}
+
+table td button {
+    background-color: #dc3545;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+table td button:hover {
+    background-color: #c82333;
+}
+
+.success-message {
+    background-color: #28a745; /* Green background */
+    color: white; /* White text */
+    padding: 15px;
+    border-radius: 5px;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

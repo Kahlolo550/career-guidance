@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Faculty;
-use App\Models\Qualification; // Import the Qualification model
+use App\Models\Institution;
 use Illuminate\Http\Request;
+use App\Models\Qualification; // Import the Qualification model
 
 class CourseController extends Controller
 {
@@ -16,9 +17,10 @@ class CourseController extends Controller
     }
 
     public function create()
-    {
+    {   
+        $institutions=Institution::all();
         $faculties = Faculty::all(); // To allow selection of the associated faculty
-        return view('admin.courses.create', compact('faculties'));
+        return view('admin.courses.create', compact('faculties','institutions'));
     }
 
     public function store(Request $request)
@@ -95,5 +97,26 @@ class CourseController extends Controller
         $course->delete();
 
         return redirect()->back()->with('success', 'Course deleted successfully');
+    }public function createcourse()
+    {
+        $institutions = Institution::all();
+        $faculties = Faculty::all();
+        $institutions=Institution::get();
+        dd($institutions, $faculties);  // Debugging statement
+    
+        return view('admin.courses.show', compact('institutions', 'faculties'));
     }
+
+    
+    public function admindashboard()
+    {
+        $institutions = Institution::all();
+        $faculties = Faculty::all();
+        $institutions=Institution::get();
+        dd($institutions, $faculties);  // Debugging statement
+    
+        return view('admin.dashboard', compact('institutions', 'faculties'));
+    }
+
+
 }

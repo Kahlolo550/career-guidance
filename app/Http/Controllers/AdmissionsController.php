@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Faculty;
+use App\Models\Admission; 
 use App\Models\Institution;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\Models\Admission; 
 
 class AdmissionsController extends Controller
 {
@@ -36,10 +37,11 @@ class AdmissionsController extends Controller
     public function index($institutionId)
     {
         $institution = Institution::findOrFail($institutionId);
-    
+       
+        $faculties=Faculty::all();
         $admissions = Admission::where('institution_id', $institutionId)->get();
     
-        return view('institution.admissions.dashboard', compact('admissions', 'institution'));
+        return view('institution.admissions.dashboard', compact('admissions', 'institution','faculties'));
     }
     
 

@@ -8,7 +8,7 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7fc;
+            background-color: #fff5f0;
             color: #333;
             display: flex;
             justify-content: center;
@@ -28,27 +28,34 @@
 
         h1 {
             font-size: 1.8rem;
-            color: #1f2937;
+            color: #e65100; /* Orangered */
             text-align: center;
             margin-bottom: 1.5rem;
+        }
+
+        label {
+            font-weight: bold;
+            color: #e65100;
         }
 
         .block {
             display: block;
             width: 100%;
-            border: 1px solid #ced4da;
+            border: 1px solid #e57373;
             border-radius: 5px;
             padding: 0.75rem;
             margin-top: 0.5rem;
             font-size: 1rem;
         }
 
-        .mt-4 {
-            margin-top: 1.5rem;
+        .block:focus {
+            border-color: #e65100;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(230, 81, 0, 0.2);
         }
 
-        .mt-1 {
-            margin-top: 0.25rem;
+        .mt-4 {
+            margin-top: 1.5rem;
         }
 
         .w-full {
@@ -70,11 +77,11 @@
         }
 
         .text-gray-600 {
-            color: #4b5563;
+            color: #6b6b6b;
         }
 
         .hover\:text-gray-900:hover {
-            color: #1f2937;
+            color: #333;
         }
 
         .ms-4 {
@@ -85,24 +92,8 @@
             border-radius: 5px;
         }
 
-        .focus\:outline-none:focus {
-            outline: none;
-        }
-
-        .focus\:ring-2:focus {
-            box-shadow: 0 0 0 2px #4f46e5;
-        }
-
-        .focus\:ring-indigo-500:focus {
-            border-color: #4f46e5;
-        }
-
-        .dark\:hover\:text-gray-100:hover {
-            color: #f9fafb;
-        }
-
         .x-primary-button {
-            background-color: #4f46e5;
+            background-color: #e65100; /* Orangered */
             color: #ffffff;
             padding: 0.75rem 1.5rem;
             border: none;
@@ -113,7 +104,15 @@
         }
 
         .x-primary-button:hover {
-            background-color: #6366f1;
+            background-color: #ff7043; /* Lighter Orangered */
+        }
+
+        a {
+            color: #e65100;
+        }
+
+        a:hover {
+            color: #ff7043;
         }
     </style>
 </head>

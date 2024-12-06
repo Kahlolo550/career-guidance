@@ -1,0 +1,332 @@
+/* General Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h4 {
+    margin: 0;
+    padding: 10px 0;
+}
+
+/* Institution Section Styling */
+.institution-section {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+}
+
+.institution-section h1 {
+    font-size: 28px;
+    color: #2c3e50;
+    text-align: left;
+}
+
+.institution-section i {
+    color: #16a085;
+}
+
+/* Faculty Section Styling */
+.faculty-section {
+    margin-top: 30px;
+    border-top: 2px solid #ecf0f1;
+    padding-top: 20px;
+}
+
+.faculty-section h2 {
+    font-size: 24px;
+    color: #2980b9;
+    margin-bottom: 15px;
+}
+
+.faculty-section i {
+    margin-right: 10px;
+}
+
+/* Course Section Styling */
+.course {
+    background-color: #ecf0f1;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.course h4 {
+    font-size: 20px;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.course ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.course ul li {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #7f8c8d;
+}
+
+.course ul li i {
+    color: #27ae60;
+}
+
+/* Button Styling */
+.show-form-button {
+    background-color: #16a085;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.show-form-button:hover {
+    background-color: #1abc9c;
+}
+
+.show-form-button i {
+    margin-right: 8px;
+}
+
+/* Modal Styling */
+.grades-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 70%;
+    max-width: 600px;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    color: #e74c3c;
+    cursor: pointer;
+}
+
+.modal-content h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Overlay Styling */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    z-index: 999;
+}
+
+/* Overlay Styling */
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+/* Modal Container */
+.grades-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1000;
+    width: 90%; /* Dynamic width, responsive to viewport */
+    max-width: 400px; /* Set max width for larger screens */
+    max-height: 80vh; /* Limit modal height */
+    overflow-y: auto; /* Allow scrolling if content exceeds height */
+}
+
+/* Close Button */
+.grades-modal .close {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    cursor: pointer;
+}
+
+/* Form Header */
+.grades-modal h2 {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #2c3e50;
+}
+
+/* Form Group Styling */
+.grades-modal .form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Label Styling */
+.grades-modal label {
+    font-size: 1rem;
+    color: #34495e;
+    margin-bottom: 8px;
+}
+
+/* Input Field Styling */
+.grades-modal input[type="text"] {
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+    width: 100%;
+}
+
+/* Input Field Focus Styling */
+.grades-modal input[type="text"]:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+/* Submit Button */
+.grades-modal .submit-button {
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 15px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+    width: 100%;
+    text-align: center;
+    margin-top: 15px;
+}
+
+/* Submit Button Hover Effect */
+.grades-modal .submit-button:hover {
+    background: #2980b9;
+}
+/* Styling for the instructions section */
+.instructions {
+    position: fixed;
+    top: 90px; /* Ensure it's placed just below 90px from the top */
+    left: 10px;
+    right: 10px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 1000; /* Ensure it's above other elements */
+    max-height: 300px;
+    overflow-y: auto;
+    font-family: Arial, sans-serif;
+    margin-left: 800px;
+}
+
+.instructions h2 {
+    font-size: 24px;
+    color: #333;
+}
+
+.instructions p {
+    font-size: 16px;
+    color: #555;
+}
+
+.instructions ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    color: #555;
+}
+
+.instructions ul li {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+/* Responsive styling for smaller screens */
+@media (max-width: 768px) {
+    .instructions {
+        top: 70px; /* Adjust top position for smaller screens */
+        left: 5px;
+        right: 5px;
+        padding: 15px;
+    }
+
+    .instructions h2 {
+        font-size: 20px;
+    }
+
+    .instructions p, .instructions ul li {
+        font-size: 14px;
+    }
+}
+
+/* Accessibility: Ensure modal is always on top */
+.grades-modal {
+    z-index: 1000;
+}
+/* Custom Alert Styles */
+.alert-success {
+    background-color: #28a745;
+    color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin: 20px;
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+.alert-error {
+    background-color: #dc3545;
+    color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin: 20px;
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+}

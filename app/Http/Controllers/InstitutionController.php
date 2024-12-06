@@ -8,6 +8,7 @@ use App\Models\Application;
 use App\Models\Institution;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class InstitutionController extends Controller
 {
@@ -29,7 +30,11 @@ class InstitutionController extends Controller
     // Show form to create a faculty
     public function createFaculty()
     {
-        return view('institution.faculties.create');
+        
+       $faculties=Faculty::all();
+       
+    $institution = auth()->guard('institution')->user();
+        return view('institution.faculties.create', compact('institution','faculties'));
     }
 
     // Store a new faculty
@@ -45,14 +50,14 @@ class InstitutionController extends Controller
             'institution_id' => $institution->id, 
         ]);
 
-        return redirect()->route('institution.home', compact('faculties'))->with('success', 'Faculty created successfully!');
+        return redirect()->back()->with('success', 'Faculty created successfully!');
     }
 
     public function createCourse()
     {
-       
+       $faculties=Faculty::all();
     $institution = auth()->guard('institution')->user(); 
-    return view('institution.courses.create', compact('institution'));
+    return view('institution.courses.create', compact('institution','faculties'));
     }
 
     
@@ -68,7 +73,7 @@ class InstitutionController extends Controller
             'faculty_id' => $request->faculty_id,
         ]);
 
-        return redirect()->route('institution.home')->with('success', 'Course created successfully!');
+        return redirect()->back()->with('success', 'Course created successfully!');
     }
     public function index()
 {
@@ -104,9 +109,9 @@ public function update(Request $request, $id)
 
 
 public function show($id)
-{
+{   $institutions=Institution::all();
     $institution = Institution::with(['faculties', ])->findOrFail($id);
-    return view('admin.institutions.show', compact('institution'));
+    return view('admin.institutions.show', compact('institution','institutions'));
 }
 
 
@@ -121,14 +126,18 @@ public function destroy($id)
 
 
 public function dashboard()
-{   $faculties = Faculty::all();
-    $institution = auth()->user()->institution; 
+{
+    $faculties = Faculty::all();
+    $institution = auth()->user()->institution;
+    $course = Course::find(1); // Or fetch the relevant course for the user
+
     $applications = Application::whereHas('course', function($query) use ($institution) {
         $query->where('institution_id', $institution->id);
     })->get();
 
-    return view('institution.home', compact('institution', 'applications','faculties'));
+    return view('institution.home', compact('institution', 'applications', 'faculties', 'course')); // Pass $course here
 }
+
 
 public function showApplications($institutionId)
 {
@@ -136,36 +145,125 @@ public function showApplications($institutionId)
     $applications = Application::whereHas('course', function($query) use ($institutionId) {
         $query->where('institution_id', $institutionId);
     })->get();
+    
+    $faculties=Faculty::all();
 
-    return view('institution.applications.index', compact('institution', 'applications'));
+    return view('institution.applications.index', compact('institution', 'applications','faculties'));
 }
 
 
 
 public function showProfile($id)
-{
+{  
+    $faculties=Faculty::all();
     $institution = Institution::findOrFail($id);
-    return view('institution.profile', compact('institution'));
+    return view('institution.profile', compact('institution','faculties'));
 }
 
 public function editProfile($id)
 {
+    $faculties=Faculty::all();
     $institution = Institution::findOrFail($id);
-    return view('institution.edit-profile', compact('institution'));
+    return view('institution.edit-profile', compact('institution','faculties'));
 }
 
-public function updateProfile(Request $request, $id)
-{
-    $institution = Institution::findOrFail($id);
-    $institution->update([
-        'name' => $request->name,
-        'email' => $request->email,
+public function updateprofile(Request $request, $id)
+    {
+        $institution = Institution::findOrFail($id);
+
+        $faculties=Faculty::all();
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'current_password' => 'required',
+            'password' => 'nullable|min:8|confirmed',
+        ]);
+
+        // Check if current password matches
+        if (!Hash::check($validated['current_password'], $institution->password)) {
+            return back()->withErrors(['current_password' => 'The current password is incorrect.']);
+        }
+        if ($request->hasFile('profile_photo')) {
+            $path = $request->file('profile_photo')->store('profile_photos', 'public');
+            $institution->profile_photo = $path;
+        }
         
+        $institution->name = $validated['name'];
+        $institution->email = $validated['email'];
+
+        // Handle profile photo upload
+        if ($request->hasFile('profile_photo')) {
+            $path = $request->file('profile_photo')->store('profile_photos', 'public');
+            $institution->profile_photo = $path;
+        }
+
+        // Update password if provided
+        if (!empty($validated['password'])) {
+            $institution->password = bcrypt($validated['password']);
+        }
+
+        $institution->save();
+
+        return redirect()->route('institution.profile', $institution->id)->with('success', 'Profile updated successfully.');
+    }
+    public function updatePhoto(Request $request, $id)
+{
+    $request->validate([
+        'profile_photo' => 'required|image|max:2048',
     ]);
-    return redirect()->route('institution.profile', $institution->id);
+
+    $institution = Institution::findOrFail($id);
+
+    if ($request->hasFile('profile_photo')) {
+        $path = $request->file('profile_photo')->store('profile_photos', 'public');
+        $institution->profile_photo = $path;
+        $institution->save();
+    }
+
+    return redirect()->route('institution.profile', $id)->with('success', 'Profile photo updated successfully.');
+}
+
+public function updatePassword(Request $request, $id)
+{
+    $request->validate([
+        'current_password' => 'required',
+        'new_password' => 'required|min:8|confirmed',
+    ]);
+
+    $institution = Institution::findOrFail($id);
+
+    if (!Hash::check($request->current_password, $institution->password)) {
+        return back()->withErrors(['current_password' => 'The current password is incorrect.']);
+    }
+
+    $institution->password = Hash::make($request->new_password);
+    $institution->save();
+
+    return redirect()->route('institution.profile', $id)->with('success', 'Password updated successfully.');
 }
 
 
+// In InstitutionController.php
+public function search(Request $request)
+{
+    $query = $request->input('query');
+    $institutions = Institution::where('name', 'like', '%' . $query . '%')->get();
+    return response()->json($institutions);
+}
+
+public function showFacultyCourses($institutionId, $facultyId)
+{
+    // Get the institution and the faculty
+    $institution = Institution::findOrFail($institutionId);
+    $faculty = Faculty::findOrFail($facultyId);
+
+    // Get courses related to the selected faculty
+    $courses = $faculty->courses;
+    $faculties=Faculty::all();
+    // Return the view with institution, faculty, and courses data
+    return view('institution.courses.show', compact('institution', 'faculty', 'courses','faculties'));
+}
 
 
 

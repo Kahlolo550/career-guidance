@@ -1,48 +1,118 @@
-@php
-    $hasAvailableCourses = false;
-@endphp
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Guidance</title>
+    <link rel="stylesheet" href="{{ asset('/css/stuheader.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/prospectus.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+
+<header>
+    <nav>
+        <!-- Dropdown for View Admissions -->
+         
+        <a href="{{ ('/dashboard') }}"><i class="fas fa-home"></i>Home</a>
+        <div class="dropdown">
+            <a href="#" class="dropdown-trigger"><i class="fas fa-university"></i> View Admissions</a>
+            <div class="dropdown-menu">
+                @foreach($institutions as $institution)
+                    <a href="{{ route('admissions.published', ['institutionId' => $institution->id]) }}">
+                        <i class="fas fa-school"></i> {{ $institution->name }}
+                    </a>
+                @endforeach
+            </div>
+        </div>
+        <div class="dropdown">
+            <a href="#" class="dropdown-trigger"><i class="fas fa-file-alt"></i> Apply</a>
+            <div class="dropdown-menu">
+                @foreach($institutions as $institution)
+                    <a href="{{ route('applications.index', ['institutionId' => $institution->id]) }}">
+                        <i class="fas fa-folder-open"></i> {{ $institution->name }}
+                    </a>
+                @endforeach
+            </div>
+        </div>
+        
+        <a href="{{ route('student.about') }}"><i class="fas fa-info-circle"></i> About Us</a>
+        <a href="{{ route('student.contact') }}"><i class="fas fa-envelope"></i> Contact Us</a>
+        <a href="{{ route('student.logout') }}" class="logout-button"><i class="fas fa-sign-out-alt"></i> Log out</a>
+        <a href="{{ route('profile.edit') }}" class="logout-button"><i class="fas fa-user-edit"></i> Edit Profile</a>
+    </nav>
+</header>
+
+<!-- Instructions Section -->
+<div class="instructions">
+    <h2><i class="fas fa-info-circle"></i> Instructions</h2>
+    <p>Welcome to the Career Guidance Portal. Please follow the instructions below to successfully apply for your desired course:</p>
+    <ul>
+        <li>Choose the institution you are interested in.</li>
+        <li>Fill out the required personal information in the application form.</li>
+        <li>Ensure to provide accurate grades for the courses you are applying to.</li>
+        <li>If you need any assistance, contact us via the 'Contact Us' section.</li>
+    </ul>
+</div>
+
+<!-- Advertisements Section -->
+
+
+<!-- Displaying success and error messages -->
+@if(session('success'))
+    <script>
+        alert("Success: {{ session('success') }}");
+    </script>
+@endif
+
+@if(session('error'))
+    <script>
+        alert("Error: {{ session('error') }}");
+    </script>
+@endif
+
+@if($errors->any())
+    <script>
+        alert("Error: {{ $errors->first() }}");
+    </script>
+@endif
 
 @foreach ($institutions as $institution)
+    @php
+        $hasGrades = false;
+    @endphp
+
     @foreach ($institution->faculties as $faculty)
         @foreach ($faculty->courses as $course)
             @if ($course->qualifications->isNotEmpty())
                 @php
-                    $hasAvailableCourses = true;
+                    $hasGrades = true;
                 @endphp
             @endif
         @endforeach
     @endforeach
-@endforeach
 
-@if ($hasAvailableCourses)
-    @foreach ($institutions as $institution)
-        @php
-            $hasGrades = false;
-        @endphp
+    @if ($hasGrades)
+        <div class="institution-section">
+            <h1><i class="fas fa-school"></i> {{ $institution->name }} Prospectus</h1>
 
-        @foreach ($institution->faculties as $faculty)
-            @foreach ($faculty->courses as $course)
-                @if ($course->qualifications->isNotEmpty())
-                    @php
-                        $hasGrades = true;
-                    @endphp
-                @endif
-            @endforeach
-        @endforeach
+            @foreach ($institution->faculties as $faculty)
+                @php
+                    $facultyHasCourses = $faculty->courses->filter(function ($course) {
+                        return $course->qualifications->isNotEmpty();
+                    });
+                @endphp
 
-        @if ($hasGrades)
-            <div class="institution-section">
-                <h1>Courses and their needed grades under {{ $institution->name }}, a higher learning institution</h1>
-
-                @foreach ($institution->faculties as $faculty)
-                    @foreach ($faculty->courses as $course)
-                        @if ($course->qualifications->isNotEmpty())
+                @if ($facultyHasCourses->isNotEmpty())
+                    <div class="faculty-section">
+                        <h2><i class="fas fa-users"></i> {{ $faculty->name }}</h2>
+                        @foreach ($facultyHasCourses as $course)
                             <div class="course">
-                                <h4>{{ $course->name }}</h4>
-                                <p>Needed Grades:</p>
+                                <h4><i class="fas fa-book"></i> {{ $course->name }}</h4>
+                                <p><i class="fas fa-clipboard-list"></i> Needed Grades:</p>
                                 <ul>
                                     @foreach ($course->qualifications as $qualification)
-                                        <li>{{ $qualification->subject_name }}:
+                                        <li><i class="fas fa-check"></i> {{ $qualification->subject_name }}:
                                             @php
                                                 $grades = is_array($qualification->needed_grades) ? $qualification->needed_grades : json_decode($qualification->needed_grades, true);
                                             @endphp
@@ -50,55 +120,62 @@
                                         </li>
                                     @endforeach
                                 </ul>
-                                <button class="show-form-button" onclick="openModal('gradesForm_{{ $course->id }}')">Show Application Form</button>
+                                <button class="show-form-button" onclick="openModal('gradesForm_{{ $course->id }}')">
+                                    <i class="fas fa-edit"></i> Show Application Form
+                                </button>
                             </div>
 
                             <div id="gradesForm_{{ $course->id }}" class="grades-modal" style="display: none;">
                                 <div class="modal-content">
                                     <span class="close" onclick="closeModal('gradesForm_{{ $course->id }}')">&times;</span>
-                                    <h2>Fill Out Your Grades for {{ $course->name }}</h2>
-                                    <form method="POST" action="{{ route('applications.store') }}">
+                                    <h2><i class="fas fa-file-alt"></i> Fill Out Your Grades for {{ $course->name }}</h2>
+                                    <form method="POST" action="{{ route('applications.store') }}" onsubmit="submitGrades(event, this, @json($course->qualifications))">
                                         @csrf
                                         <div class="form-group">
-                                            <label for="name">Name:</label>
+                                            <label for="name"><i class="fas fa-user"></i> Name:</label>
                                             <input type="text" name="name" id="name" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="surname">Surname:</label>
+                                            <label for="surname"><i class="fas fa-user"></i> Surname:</label>
                                             <input type="text" name="surname" id="surname" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="former_school">Former School:</label>
+                                            <label for="former_school"><i class="fas fa-school"></i> Former School:</label>
                                             <input type="text" name="former_school" id="former_school" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="candidate_number">Candidate Number:</label>
+                                            <label for="candidate_number"><i class="fas fa-id-card"></i> Candidate Number:</label>
                                             <input type="text" name="candidate_number" id="candidate_number" required>
                                         </div>
                                         @foreach ($course->qualifications as $qualification)
                                             <div class="form-group">
-                                                <label for="grade_{{ $qualification->id }}">{{ $qualification->subject_name }} grade:</label>
+                                                <label for="grade_{{ $qualification->id }}"><i class="fas fa-graduation-cap"></i> {{ $qualification->subject_name }} grade:</label>
                                                 <input type="text" name="grades[{{ $qualification->id }}]" id="grade_{{ $qualification->id }}" required>
                                             </div>
                                         @endforeach
                                         <input type="hidden" name="course_id" value="{{ $course->id }}">
                                         <input type="hidden" name="institution_id" value="{{ $institution->id }}">
-                                        <button type="submit" class="submit-button">Submit Grades</button>
+                                        <button type="submit" class="submit-button"><i class="fas fa-paper-plane"></i> Submit Grades</button>
                                     </form>
                                 </div>
                             </div>
-                        @endif
-                    @endforeach
-                @endforeach
-            </div>
-        @endif
-    @endforeach
-@else
-    <p class="no-courses-message">No institutions currently have courses requiring grades.</p>
-@endif
+                        @endforeach
+                    </div>
+                @endif
+            @endforeach
+        </div>
+    @endif
+@endforeach
 
+<!-- Overlay for Modal -->
 <div id="overlay" class="overlay" style="display: none;"></div>
 
+<!-- Alert Message -->
+<div id="alert-message" class="alert" style="display: none;">
+    <span id="alert-text"></span>
+    <button onclick="closeAlert()">OK</button>
+</div>
+@include('layouts.footer')
 <script>
     function openModal(modalId) {
         document.getElementById(modalId).style.display = "block";
@@ -109,142 +186,52 @@
         document.getElementById(modalId).style.display = "none";
         document.getElementById('overlay').style.display = "none"; 
     }
+
+    // Function to check if the grade entered is valid for a subject
+    function validateGrades(event, qualifications) {
+        let valid = true;
+        let invalidFields = [];
+
+        // Iterate through each qualification and its grade input field
+        qualifications.forEach(function(qualification) {
+            const gradeInput = document.getElementById(`grade_${qualification.id}`);
+            const grade = gradeInput.value.trim().toUpperCase();
+
+            // Parse the needed grades from the qualification
+            const neededGrades = qualification.needed_grades; // assuming this is an array of valid grades
+            const validGrades = neededGrades.split(',').map(grade => grade.trim().toUpperCase()); 
+
+            // Check if the entered grade is in the list of valid grades
+            if (!validGrades.includes(grade)) {
+                valid = false;
+                invalidFields.push(qualification.subject_name);
+            }
+        });
+
+        if (!valid) {
+            event.preventDefault(); // Prevent form submission
+            showAlert(`You don't qualify for this course. Invalid grades for: ${invalidFields.join(', ')}`);
+        }
+    }
+
+    // Show the alert message
+    function showAlert(message) {
+        const alertBox = document.getElementById('alert-message');
+        const alertText = document.getElementById('alert-text');
+        alertText.innerText = message;
+        alertBox.style.display = 'block';
+    }
+
+    // Close the alert message
+    function closeAlert() {
+        document.getElementById('alert-message').style.display = 'none';
+    }
+
+    // Submit the grades form
+    function submitGrades(event, form, qualifications) {
+        validateGrades(event, qualifications);
+    }
 </script>
 
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f9f9f9;
-        color: #333;
-    }
-
-    .institution-section {
-        margin: 20px auto;
-        max-width: 800px;
-        background-color: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-    }
-
-    h1 {
-        font-size: 24px;
-        margin-bottom: 20px;
-        color: #007bff;
-    }
-
-    .course {
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        margin-bottom: 15px;
-        padding: 15px;
-        background-color: #f1f1f1;
-        transition: background-color 0.3s;
-    }
-
-    .course:hover {
-        background-color: #e9ecef;
-    }
-
-    h4 {
-        margin-top: 0;
-        color: #333;
-    }
-
-    .show-form-button {
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        padding: 10px 15px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-
-    .show-form-button:hover {
-        background-color: #0056b3;
-    }
-
-    .grades-modal {
-        display: none;
-        position: fixed;
-        z-index: 1000;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        width: 90%;
-        max-width: 600px;
-        background-color: #fff;
-        border-radius: 8px;
-        padding: 20px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    }
-
-    .modal-content {
-        padding: 20px;
-    }
-
-    .close {
-        cursor: pointer;
-        position: absolute;
-        right: 20px;
-        top: 20px;
-        font-size: 24px;
-    }
-
-    .submit-button {
-        background-color: #28a745;
-        color: white;
-        padding: 10px 15px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-
-    .submit-button:hover {
-        background-color: #218838;
-    }
-
-    .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 999;
-    }
-
-    .no-courses-message {
-        text-align: center;
-        font-size: 18px;
-        color: #dc3545;
-        margin: 20px;
-    }
-
-    .form-group {
-        margin-bottom: 15px;
-    }
-
-    .form-group label {
-        display: block;
-        margin-bottom: 5px;
-        color: #333;
-    }
-
-    .form-group input {
-        width: 100%;
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
-
-    .form-group input:focus {
-        border-color: #007bff;
-        outline: none;
-    }
-</style>
+</body>
+</html>

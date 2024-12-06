@@ -4,186 +4,165 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Institution Details</title>
+
     <style>
-    
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f5f1;
-            color: #333;
             margin: 0;
             padding: 0;
+            background-color: #f4f4f4;
         }
 
-      
         .container {
-            max-width: 800px;
-           margin-left: 300px;
-            padding: 25px;
-            background-color: #fff;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
             border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0, 128, 0, 0.2);
-            position: relative;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        h1 {
-            font-size: 28px;
-            color: orangered;
-            margin-bottom: 20px;
-            text-align: center;
-            text-shadow: 0px 1px 3px rgba(0, 128, 0, 0.3);
+        h1, h2 {
+            color: #333;
         }
 
-       
         .back-button {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 16px;
-            color: #fff;
-            background-color: orangered;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 15px;
-            cursor: pointer;
             text-decoration: none;
-            display: flex;
-            align-items: center;
-            transition: background-color 0.3s ease;
-            box-shadow: 0px 4px 8px rgba(40, 167, 69, 0.3);
-        }
-
-        .back-button:hover {
-            background-color: #218838;
+            color: #007bff;
+            font-size: 16px;
+            margin-bottom: 20px;
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 5px;
+            background-color: #f8f9fa;
         }
 
         .back-button svg {
-            margin-right: 8px;
+            margin-right: 5px;
         }
 
-        h2 {
-            font-size: 22px;
-            color: #333;
-            margin-top: 30px;
-            border-bottom: 2px solid #ddd;
-            padding-bottom: 5px;
+        .faculties {
+            margin-top: 20px;
         }
 
-        button, .add-faculty-form button {
-            padding: 10px 20px;
-            font-size: 16px;
-            color: #fff;
-            background-color: orangered;
+        button {
+            background-color: #28a745;
+            color: white;
             border: none;
+            padding: 10px 15px;
             border-radius: 5px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 15px;
-            box-shadow: 0px 4px 8px rgba(40, 167, 69, 0.3);
+            font-size: 16px;
+            margin-bottom: 20px;
         }
 
         button:hover {
             background-color: #218838;
-            transform: translateY(-1px);
-            box-shadow: 0px 6px 12px rgba(40, 167, 69, 0.4);
         }
 
         .add-faculty-form {
             display: none;
             margin-top: 20px;
-            background-color: #f9f9f9;
+            margin-bottom: 20px;
             padding: 20px;
+            background-color: #f8f9fa;
             border-radius: 5px;
-            box-shadow: 0px 3px 10px rgba(0, 128, 0, 0.1);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         }
 
-        .add-faculty-form label {
-            font-size: 16px;
-            color: orangered;
-        }
-
-        .add-faculty-form input[type="text"] {
+        .add-faculty-form input {
             width: 100%;
             padding: 10px;
-            margin-top: 8px;
             margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-shadow: inset 0 2px 4px rgba(0, 128, 0, 0.1);
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
         }
 
-      
+        .add-faculty-form button {
+            background-color: #007bff;
+            margin-top: 10px;
+            width: 100%;
+            padding: 10px;
+        }
+
+        .add-faculty-form button:hover {
+            background-color: #0056b3;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
-            box-shadow: 0px 3px 8px rgba(0, 128, 0, 0.1);
+            margin-top: 20px;
         }
 
-        th, td {
-            padding: 12px 15px;
-            border: 1px solid #ddd;
+        table th, table td {
+            padding: 10px;
             text-align: left;
+            border-bottom: 1px solid #ddd;
         }
 
-        th {
-            background-color: orangered;
-            color: #fff;
-            font-weight: 600;
-            box-shadow: inset 0px -2px 4px rgba(0, 100, 0, 0.2);
+        table th {
+            background-color: #007bff;
+            color: white;
         }
 
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        tr:hover {
-            background-color: #e9f5eb;
-        }
-
-       
-        a {
-            color: #28a745;
+        table td a {
+            background-color: #17a2b8;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
             text-decoration: none;
+            display: inline-block;
+            margin-right: 8px;
         }
 
-        a:hover {
-            text-decoration: underline;
+        table td a:hover {
+            background-color: #138496;
         }
-        .sidebar {
-            width: 250px;
-            height: 100vh;
+
+        table td button {
+            background-color: #dc3545;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        table td button:hover {
+            background-color: #c82333;
+        }
+
+        /* Success message styling */
+        .success-message {
+            background-color: #28a745; /* Green background */
+            color: white; /* White text */
+            padding: 15px;
+            border-radius: 5px;
             position: fixed;
-            left: 0;
-            top: 0;
-            background-color: #ff4500;
-            padding-top: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #fff;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.5s ease-out;
         }
 
-        .sidebar a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 18px;
-            padding: 15px 20px;
-            width: 100%;
-            text-align: center;
-            transition: background-color 0.3s;
+        @keyframes slideIn {
+            0% {
+                transform: translateY(-30px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
-        .sidebar a:hover {
-            width: 250px;
-            background-color: #ff6347;
-        }
-
-        .sidebar h2 {
-            font-size: 24px;
-            margin-bottom: 30px;
-        }
     </style>
+
     <script>
+        // Toggle the faculty form visibility
         function toggleFacultyForm() {
             var form = document.getElementById('add-faculty-form');
             form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
@@ -191,21 +170,11 @@
     </script>
 </head>
 <body>
-<div class="sidebar">
-        <h2>Admin Dashboard</h2>
-        <a href="{{ route('admin.dashboard') }}">Home</a>
-        <a href="{{ route('institutions.index') }}">Institutions</a>
-        <a href="{{route('admin.logout')}}">Log out</a>
-    </div>
+@include('admin.layouts.header')
 
 <div class="container">
     <!-- Back Button -->
-    <a href="javascript:history.back()" class="back-button">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 1-.5.5H3.707l4.147 4.146a.5.5 0 0 1-.708.708l-5-5a.5.5 0 0 1 0-.708l5-5a.5.5 0 1 1 .708.708L3.707 7.5H14.5A.5.5 0 0 1 15 8z"/>
-        </svg>
-        Back
-    </a>
+    
 
     <h1>{{ $institution->name }}</h1>
 
@@ -238,7 +207,7 @@
                     </td>
                     <td>
                         <!-- View Courses Button -->
-                        <a href="{{ route('faculties.show', $faculty->id) }}" style="background-color: #17a2b8; color: #fff; padding: 8px 12px; border-radius: 5px; text-decoration: none; display: inline-block; margin-right: 8px;">
+                        <a href="{{ route('faculties.show', $faculty->id) }}">
                             View Courses
                         </a>
                         
@@ -246,7 +215,7 @@
                         <form action="{{ route('faculties.destroy', $faculty->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" style="background-color: #dc3545; color: #fff; padding: 8px 12px; border: none; border-radius: 5px; cursor: pointer;">
+                            <button type="submit">
                                 Delete
                             </button>
                         </form>

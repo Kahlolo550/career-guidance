@@ -4,131 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Profile</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f9f9fb;
-            color: #333;
-            line-height: 1.6;
-        }
-
-        header {
-            background-color: #1f2937;
-            padding: 1rem;
-            text-align: center;
-            color: #ffffff;
-            font-size: 2rem;
-            font-weight: bold;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        h2 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            text-align: center;
-            color: #1f2937;
-        }
-
-        .button {
-            background-color: #2563eb;
-            color: #ffffff;
-            border: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: background-color 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            text-decoration: none;
-        }
-
-        .button:hover {
-            background-color: #1e3a8a;
-        }
-
-        .back-button {
-            position: fixed;
-            top: 1rem;
-            left: 1rem;
-            z-index: 10;
-            background-color: #ffffff;
-            border: 1px solid #d1d5db;
-            color: #2563eb;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            cursor: pointer;
-        }
-
-        .back-button:hover {
-            background-color: #f3f4f6;
-            transform: scale(1.05);
-        }
-
-        .form-section {
-            margin-top: 1.5rem;
-            padding: 1.5rem;
-            border: 1px solid #d1d5db;
-            border-radius: 10px;
-            background-color: #f4f6f9;
-        }
-
-        .form-section h3 {
-            font-size: 1.5rem;
-            color: #1f2937;
-            margin-bottom: 1rem;
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #d1d5db;
-            border-radius: 5px;
-            margin-bottom: 1rem;
-            font-size: 1rem;
-            color: #333;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            border-color: #2563eb;
-            outline: none;
-        }
-
-        .submit-button {
-            background-color: #2563eb;
-            color: #ffffff;
-            border: none;
-            padding: 0.8rem 1.2rem;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
-        }
-
-        .submit-button:hover {
-            background-color: #1e3a8a;
-        }
-    </style>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('/css/style2.css') }}">
 </head>
 <body>
+<header>
+    <nav>
+        <a href="{{url('/dashboard')}}"><i class="fas fa-home"></i>Home</a>
+        <div class="dropdown">
+            <a href="#" class="dropdown-trigger"><i class="fas fa-university"></i> View Admissions</a>
+            <div class="dropdown-menu">
+                @foreach($institutions as $institution)
+                <a href="{{ route('admissions.published', ['institutionId' => $institution->id]) }}">
+                        {{ $institution->name }}
+                    </a>
+                @endforeach
+            </div>
+        </div>
+        <div class="dropdown">
+            <a href="#" class="dropdown-trigger"><i class="fas fa-file-alt"></i> Apply</a>
+            <div class="dropdown-menu">
+                @foreach($institutions as $institution)
+                <a href="{{ route('applications.index', ['institutionId' => $institution->id]) }}">
+                    {{ $institution->name }}
+                </a>
+                @endforeach
+            </div>
+        </div>
+        <a href="{{ route('student.about') }}"><i class="fas fa-info-circle"></i> About Us</a>
+        <a href="{{ route('student.contact') }}"><i class="fas fa-envelope"></i> Contact Us</a>
+        <a href="{{ route('student.logout') }}" class="logout-button"><i class="fas fa-sign-out-alt"></i> Log out</a>
+        <a href="{{ route('profile.edit') }}" class="logout-button"><i class="fas fa-user-edit"></i> Edit Profile</a>
+    </nav>
+</header>
 
-<a href="{{route('dashboard')}}" class="back-button" onclick="history.back();">Back</a>
-
+@if(session('success'))
+            <div class="success-message">{{ session('success') }}</div>
+        @endif
 <div class="container">
     <header>
         <h2>Edit Profile</h2>
@@ -149,6 +62,55 @@
         @include('profile.partials.delete-user-form')
     </div>
 </div>
+
+@include("layouts.footer")
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const toggleButton = document.getElementById("toggle-institutions");
+        const institutionsSection = document.getElementById("institutions-section");
+
+        institutionsSection.style.display = "none";
+
+        toggleButton.addEventListener("click", () => {
+            const isVisible = institutionsSection.style.display === "block";
+            institutionsSection.style.display = isVisible ? "none" : "block";
+            toggleButton.innerHTML = isVisible 
+                ? '<i class="fas fa-building"></i> Explore Institutions' 
+                : '<i class="fas fa-times"></i> Hide Institutions';
+        });
+    });
+
+    function searchInstitutions() {
+        const searchInput = document.getElementById('institution-search').value.toLowerCase();
+        const institutionElements = document.querySelectorAll('.institution');
+        const suggestionsBox = document.getElementById('search-suggestions');
+        
+        suggestionsBox.innerHTML = '';
+        
+        institutionElements.forEach((institution) => {
+            const institutionName = institution.querySelector('h3').textContent.toLowerCase();
+            const institutionId = institution.getAttribute('data-id');
+            
+            if (institutionName.includes(searchInput) && searchInput.length > 0) {
+                const suggestionItem = document.createElement('div');
+                suggestionItem.classList.add('suggestion');
+                suggestionItem.textContent = institution.querySelector('h3').textContent;
+                suggestionsBox.appendChild(suggestionItem);
+
+                suggestionItem.addEventListener('click', () => {
+                    window.location.href = `{{route('applications.index', $institutionId)}}`;
+                });
+            }
+        });
+
+        if (searchInput === '') {
+            suggestionsBox.style.display = 'none';
+        } else {
+            suggestionsBox.style.display = 'block';
+        }
+    }
+</script>
 
 </body>
 </html>

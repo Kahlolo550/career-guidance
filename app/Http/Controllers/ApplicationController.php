@@ -63,12 +63,28 @@ class ApplicationController extends Controller
         return redirect()->route('applications.index')->with('success', 'Application submitted successfully.');
     }
 
-    public function index()
-    {   $institutions = Institution::get();
-        $applications = Application::with('course', 'institution', 'user')->get();
+    public function index(Request $request)
+    {
+        // Retrieve all institutions along with their applications
+        $institutions = Institution::with('applications')->get();
+        $applications = collect(); // Default empty collection
+    
+        // If an institution is selected, fetch its applications
+        if ($request->has('institution_id')) {
+            $institutionId = $request->input('institution_id');
+            $applications = Application::with('course', 'institution', 'user')
+                                       ->where('institution_id',)
+                                       ->get();
+        }
+        $institutions=Institution::all();
 
- 
-        return view('applications.index', compact('applications','institutions'));
-        
+    // Paginate the applications for the institution
+    $applications = Application::where('institution_id')->paginate(10); // Adjust the number as needed
+
+    return view('applications.index', compact( 'applications','institutions'));
+    
+        // Pass the institutions and applications to the view
+    
     }
+    
 }
